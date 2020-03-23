@@ -24,7 +24,7 @@ class TwoLayerNet():
         y = self.predict(x)
         return cross_entrppy_error(y, t)
 
-    def numerical_gradient(self, x, t):
+    def numerical_gradient(self, x, t):  # 数值微分方法计算梯度
         def loss_W(W): return self.loss(x, t)
         grads = {}
         grads['W1'] = cal_gradient(loss_W, self.params['W1'])
@@ -33,7 +33,7 @@ class TwoLayerNet():
         grads['b1'] = cal_gradient(loss_W, self.params['b2'])
         return grads
 
-    def gradient(self, x, t):
+    def gradient(self, x, t):  # 误差反向传播算法高速计算梯度
         W1, W2 = self.params['W1'], self.params['W2']
         b1, b2 = self.params['b1'], self.params['b2']
         grads = {}
