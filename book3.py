@@ -34,7 +34,7 @@ class instant():
 
             # 计算梯度
             # grad = self.network.gradient(x_bat, t_bat)#误差反向传播法（快速）
-            grad = self.network.numerical_gradient(x_bat, t_bat)
+            grad = self.network.gradient(x_bat, t_bat)
             # 梯度下降，更新权值和偏置参数
             for j in ['W1', 'W2', 'b1', 'b2']:
                 self.network.params[j] -= self.learn_rate * grad[j]
@@ -42,13 +42,10 @@ class instant():
             print('第' + str(i) + '个完成')
 
 
-# try:
-#     A = instant()
-#     A.learn()
-#     A.draw()
-# except:
-#     del(A)
-#     print("error accured")
-
-A = instant()
-A.learn()
+try:
+    A = instant()
+    A.learn()
+    A.draw()
+except:
+    del(A)
+    print("error accured")
