@@ -60,5 +60,5 @@ class TwoLayerNet():
 
     def cal_accuracy(self, x, t):
         y = self.predict(x)
-        y = np.argmax(y)
+        y = np.argmax(y, axis=1)
         return np.sum(y == t) / float(len(t))

@@ -17,12 +17,14 @@ class instant():
         self.network = TwoLayerNet(  # 初始化网络
             input_size=784, hidden_size=50, output_size=10)
         self.train_loss = list()
+        self.acc_list = list()
 
     def draw(self):
         iters = list()
-        for i in range(self.iter_num):
+        for i in range(int(self.iter_num / 5)):
             iters.append(i + 1)
-        plt.plot(iters, self.train_loss)
+        # plt.plot(iters, self.train_loss)
+        plt.plot(iters, self.acc_list)
         plt.show()
 
     def learn(self):
@@ -38,14 +40,19 @@ class instant():
             # 梯度下降，更新权值和偏置参数
             for j in ['W1', 'W2', 'b1', 'b2']:
                 self.network.params[j] -= self.learn_rate * grad[j]
-            self.train_loss.append(self.network.loss(x_bat, t_bat))
+            # self.train_loss.append(self.network.loss(x_bat, t_bat))  # 计算损失函数
             print('第' + str(i) + '个完成')
+            if i % 5 == 0:
+                self.acc_list.append(self.network.cal_accuracy(x_bat, t_bat))
 
 
-try:
-    A = instant()
-    A.learn()
-    A.draw()
-except:
-    del(A)
-    print("error accured")
+# try:
+#     A = instant()
+#     A.learn()
+#     A.draw()
+# except:
+#     del(A)
+#     print("error accured")
+A = instant()
+A.learn()
+A.draw()
