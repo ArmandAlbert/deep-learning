@@ -1,8 +1,8 @@
 # 使用twolayernet来进行学习
-from .twolayernet import TwoLayerNet
+from twolayernet import TwoLayerNet
 import numpy as np
 import matplotlib.pyplot as plt
-from ..source.dataset.mnist import load_mnist
+from source.dataset.mnist import load_mnist
 import sys
 import os
 sys.path.append(os.pardir)  # 为了导入父目录的文件而进行的设定
@@ -37,9 +37,9 @@ class instant():
             t_bat = self.t_train[batches]
 
             # 计算梯度
-            grad = self.network.numerical_differential(
-                x_bat, t_bat)  # 数值微分法，慢速
-            # grad = self.network.gradient(x_bat, t_bat)  # 误差反向传播法（快速）
+            # grad = self.network.numerical_differential(
+            # x_bat, t_bat)  # 数值微分法，慢速
+            grad = self.network.gradient(x_bat, t_bat)  # 误差反向传播法（快速）
             print(grad['W1'].shape)
             print(grad['W2'].shape)
             print(grad['b1'].shape)
