@@ -1,16 +1,18 @@
 # 使用twolayernet来进行学习
-
-from source.dataset.mnist import load_mnist
-import matplotlib.pyplot as plt
+from .twolayernet import TwoLayerNet
 import numpy as np
-from twolayernet import TwoLayerNet
+import matplotlib.pyplot as plt
+from ..source.dataset.mnist import load_mnist
+import sys
+import os
+sys.path.append(os.pardir)  # 为了导入父目录的文件而进行的设定
 
 
 class instant():
     def __init__(self):
         (self.x_train, self.t_train), (x_test, t_test) = load_mnist(
             normalize=True, one_hot_label=True)
-        self.iter_num = 10000  # 学习次数
+        self.iter_num = 50  # 学习次数
         self.learn_rate = 0.1  # 学习率
         self.batch_size = 100  # 批处理数量
         self.train_size = self.x_train.shape[0]  # 总训练数量
@@ -35,8 +37,13 @@ class instant():
             t_bat = self.t_train[batches]
 
             # 计算梯度
-            # grad = self.network.gradient(x_bat, t_bat)#误差反向传播法（快速）
-            grad = self.network.gradient(x_bat, t_bat)
+            grad = self.network.numerical_differential(
+                x_bat, t_bat)  # 数值微分法，慢速
+            # grad = self.network.gradient(x_bat, t_bat)  # 误差反向传播法（快速）
+            print(grad['W1'].shape)
+            print(grad['W2'].shape)
+            print(grad['b1'].shape)
+            print(grad['b1'].shape)
             # 梯度下降，更新权值和偏置参数
             for j in ['W1', 'W2', 'b1', 'b2']:
                 self.network.params[j] -= self.learn_rate * grad[j]
