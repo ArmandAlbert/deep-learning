@@ -1,4 +1,4 @@
-from functions import sigmoid, softmax, cross_entrppy_error, cal_gradient, sigmoid_grad
+from needs import sigmoid, softmax, cross_entrppy_error, cal_gradient, sigmoid_grad
 import numpy as np
 
 

@@ -46,3 +46,19 @@ def cal_gradient(f, x):  # 梯度下降，计算梯度
         grad[i] = (fxh1 - fxh2) / (2 * h)
         x[i] = tmp
     return grad
+
+
+class Relu:
+    def __init__(self):
+        self.mask = None
+
+    def forward(self, x):  # 前向传播
+        self.mask = (x <= 0)
+        out = x.copy()
+        out[self.mask] = 0
+        return out
+
+    def backward(self, dout):  # 反向传播
+        dout[self.mask] = 0
+        dx = dout
+        return dx
