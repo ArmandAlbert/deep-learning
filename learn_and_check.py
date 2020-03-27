@@ -1,5 +1,5 @@
 # 使用twolayernet来进行学习
-from twolayernet import TwoLayerNet
+from twolayernet import TwoLayerNet,TwoLayerNet_Pro
 import numpy as np
 import matplotlib.pyplot as plt
 from source.dataset.mnist import load_mnist
@@ -12,11 +12,11 @@ class instant():
     def __init__(self):
         (self.x_train, self.t_train), (x_test, t_test) = load_mnist(
             normalize=True, one_hot_label=True)
-        self.iter_num = 50  # 学习次数
+        self.iter_num = 2000  # 学习次数
         self.learn_rate = 0.1  # 学习率
         self.batch_size = 100  # 批处理数量
         self.train_size = self.x_train.shape[0]  # 总训练数量
-        self.network = TwoLayerNet(  # 初始化网络
+        self.network = TwoLayerNet_Pro(  # 初始化网络
             input_size=784, hidden_size=50, output_size=10)
         self.train_loss = list()
         self.acc_list = list()
@@ -40,10 +40,10 @@ class instant():
             # grad = self.network.numerical_differential(
             # x_bat, t_bat)  # 数值微分法，慢速
             grad = self.network.gradient(x_bat, t_bat)  # 误差反向传播法（快速）
-            print(grad['W1'].shape)
-            print(grad['W2'].shape)
-            print(grad['b1'].shape)
-            print(grad['b1'].shape)
+            # print(grad['W1'].shape)
+            # print(grad['W2'].shape)
+            # print(grad['b1'].shape)
+            # print(grad['b1'].shape)
             # 梯度下降，更新权值和偏置参数
             for j in ['W1', 'W2', 'b1', 'b2']:
                 self.network.params[j] -= self.learn_rate * grad[j]

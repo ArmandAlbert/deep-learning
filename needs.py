@@ -62,3 +62,54 @@ class Relu:
         dout[self.mask] = 0
         dx = dout
         return dx
+
+
+class Sigmoid:
+    def __init__(self):
+        self.out = None  # 正向输入
+
+    def forward(self, x):
+        out = 1 / (1 + np.exp(x))
+        self.out = out
+        return out
+
+    def backward(self, dout):
+        dx = dout * (1.0 - self.out) * self.out
+
+
+class Affine:
+    def __init__(self, W, b):
+        self.b = b
+        self.W = W
+        self.x = None
+        self.db = None
+        self.dW = None
+
+    def forward(self, x):  # 正向，矩阵乘积运算
+        self.x = x
+        out = np.dot(x, self.W) + self.b
+        return out
+
+    def backward(self, dout):  # 反向，计算反向误差..
+        dx = np.dot(dout, self.W.T)
+        self.dW = np.dot(self.x.T, dout)
+        self.db = np.sum(dout, axis=0)
+        return dx
+
+
+class Softmax_With_Loss:
+    def __init__(self):
+        self.loss = None
+        self.t = None
+        self.y = None
+
+    def forward(self, x, t):  # 正向，计算损失函数
+        self.t = t
+        self.y = softmax(x)
+        self.loss = cross_entrppy_error(self.y, self.t)
+        return self.loss
+
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size  # 反向，除以批大小，返回的是单个数据的误差
+        return dx
