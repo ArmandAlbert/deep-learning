@@ -1,6 +1,13 @@
 import numpy as np
 
 
+def relu(x):
+    mask = (x <= 0)
+    out = x.copy()
+    out[mask] = 0
+    return out
+
+
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
@@ -69,7 +76,7 @@ class Sigmoid:
         self.out = None  # 正向输入
 
     def forward(self, x):
-        out = 1 / (1 + np.exp(x))
+        out = 1 / (1 + np.exp(-x))
         self.out = out
         return out
 
